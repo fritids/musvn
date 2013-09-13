@@ -1,0 +1,25 @@
+/*
+  Plugin Name: Special Title
+  Description: Add an image next to the title of the post/page
+  Version: 0.1
+  Author: Global Net One
+  License: Modified BSD license
+  Author URI: http://globalnet-1.com
+ */
+
+jQuery(document).ready(function() {
+ 
+    jQuery('#special-title-uploader').click(function() {
+        formfield = jQuery('#special-title-img-src').attr('name');
+        tb_show('Special Title Image Chooser', 'media-upload.php?type=image&amp;TB_iframe=true');
+        return false;
+    });
+ 
+    window.send_to_editor = function(html) {
+        imgurl = jQuery('img',html).attr('src');
+        jQuery('#special-title-img-src').val(imgurl);
+        jQuery('#special-title-image').attr('src',imgurl);
+        jQuery('#special-title-image').show();
+        tb_remove();
+    }
+});

@@ -1,0 +1,43 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Post Title v0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-25 14:43+0700\n"
+"PO-Revision-Date: 2012-11-08 16:33+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../special-title.php:82
+msgid "Special Title"
+msgstr "特別なタイトル"
+
+#: ../special-title.php:99
+msgid "Enable Special Title for this post"
+msgstr "このポストのための特別なタイトルを有効にする"
+
+#: ../special-title.php:103
+msgid "Choose the image"
+msgstr "画像を選択してください"
+
+#: ../special-title.php:117
+msgid "Expiration date"
+msgstr "有効期限"
+
+#: ../special-title.php:120
+msgid "Blank mean forever"
+msgstr "ブランクは期限なしを意味します"
+
+#: ../special-title.php:124
+msgid "Effective page"
+msgstr "有効なページ"
+

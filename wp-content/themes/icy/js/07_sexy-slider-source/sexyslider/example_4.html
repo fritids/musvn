@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>SexySlider &raquo; Help File</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+  <link rel="stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="css/global.css" />
+  <link rel="stylesheet" type="text/css" href="css/sexyslider.css" />
+
+  <script type="text/javascript" src="javascript/jquery.min.js"></script>
+  <script type="text/javascript" src="javascript/jquery.sexyslider.min.js"></script>
+  
+  <style type="text/css">
+    .sexyslider-title
+    {
+      position:absolute;
+      background:#000000;
+      color:#FFFFFF;
+      padding:10px 15px;
+      z-index:5;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="top">
+    <div id="header">
+        <h1>Sexy Slider <span>Example 4</span></h1>
+    </div>
+
+    <div class="hastoc">
+
+          
+          <h2>Advanced Example</h2>
+          
+          <div id="wrapper">
+            <div id="slider">
+              <img src="assets/slide_1.jpg" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan arcu eget mauris lobortis euismod ornare leo ultrices."/>
+              <img src="assets/slide_2.jpg" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel lorem velit. "/>
+              <img src="assets/slide_3.jpg" alt="Nullam ac lectus a neque consectetur convallis et nec nisl. Integer tempor fringilla metus nec scelerisque. Ut vel dui nulla. Morbi a blandit mi. Nulla iaculis justo in justo sodales sagittis."/>
+              <img src="assets/slide_4.jpg" alt="Quisque ut viverra diam. Nulla venenatis, ante nec egestas varius, nunc ligula imperdiet libero, non placerat ligula lacus eget diam. "/>
+              <img src="assets/slide_5.jpg" alt="Call of Duty Modern Warfare 2 sold approximately 4.7 million copies worldwide in 24 hours. Visit the &lt;a href=&quot;http://www.modernwarfare2.com/&quot;&gt;official website&lt;/a&gt;"/>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+            $(document).ready(function() {
+              $("#slider").SexySlider({
+                width         : 560,
+                height        : 200,
+                strips        : 10,
+                delay         : 3000,
+                stripSpeed    : 400,
+                autopause     : false,
+                titlePosition : 'right',
+                titleStyle    : false,
+                titleSpeed    : 400,
+                onComplete    : function() { if (jQuery.browser.msie) { $("#slider .sexyslider-title").get(0).style.removeAttribute('filter'); } },
+                onTitleHide   : function() { $('#slider .sexyslider-title').css({'height':0}).animate({'height':200}, { queue:false, duration:700 });},
+                onTitleShow   : function() { if (jQuery.browser.msie) { $("#slider .sexyslider-title").get(0).style.removeAttribute('filter'); } },
+                effect        : 'fade'
+              });
+            });
+          </script>
+
+        </div>
+
+    </div><!--/hastoc-->
+  </div>
+  <!-- Syntax highlighting Javascript http://www.howtocreate.co.uk/tutorials/jsexamples/syntax/ -->
+</body>
+</html>

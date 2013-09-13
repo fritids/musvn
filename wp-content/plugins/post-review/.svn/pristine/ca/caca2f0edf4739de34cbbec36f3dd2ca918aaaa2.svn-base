@@ -1,0 +1,61 @@
+<?php
+add_action('admin_menu', 'pr_create_menu');
+
+function pr_create_menu() {
+    /* create new top-level menu */
+    add_submenu_page('edit.php', 'Post Review - Settings', 'Post Review', 'manage_options', 'pr_settings', 'pr_settings_page');
+
+    /* call register settings function */
+    add_action('admin_init', 'register_pgsettings');
+}
+
+function register_pgsettings() {
+    /* register our settings */
+    register_setting('pr-settings-group', 'what_categories');
+}
+
+function pr_settings_page() {
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have sufficient permissions to access this page.'));
+    }
+    ?>
+    <div class="wrap">
+        <h2>Post Review</h2>
+        <form method="post" action="options.php">
+            <?php settings_fields('pr-settings-group'); ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <?php
+                    $args = array(
+                        'orderby' => 'name',
+                        'order' => 'ASC',
+                        'hide_empty' => 0
+                    );
+                    $categories = get_categories($args);
+                    ?>
+                    <th scope="row">Which categories to allowed review?</th>
+                    <td>
+                        <select name="what_categories[]" size="6" multiple="multiple">
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo $category->cat_ID ?>" <?php
+                        if (is_array(get_option('what_categories'))) {
+                            if (in_array($category->cat_ID, get_option('what_categories'))) {
+                                        ?> selected="selected"  <?php
+                            }
+                        }
+                                ?> >
+                                            <?php echo $category->cat_name ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        (<?php echo _e('Hold Ctrl to select multiple items') ?>)
+                    </td>
+                </tr>
+            </table>
+
+            <p class="submit">
+                <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+            </p>
+        </form>
+    </div>
+<?php } ?>

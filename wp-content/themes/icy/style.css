@@ -1,0 +1,173 @@
+/*
+Theme Name: Icy Cake & Ice Cream
+Theme URI: http://icy.com.vn
+Description: Theme for Icy Cake & Ice Cream Store designed by SilentSword
+Author: SilentSword
+Author URI: http://silentsword.net
+Version: 1.0
+Text Domain: Icy_Cake_&_Ice_Cream
+*/
+
+/* yellow color : #fecb00 */
+
+body{background: #6a6c55; font-family: sans-serif;  font-size: 10pt;}
+
+a{text-decoration: none; outline: 0; border: none; color: #000;}
+
+a:link{color: #000;}
+
+.last_child{margin-right: 0 !important; margin-left: 0 !important}
+
+.float_left{float: left}
+
+.float_right{float: right}
+
+.height10{height: 10px;}
+
+.borderRadius5{border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+
+.marginBottom{margin-bottom: 10px}
+
+.marginTop{margin-top: 10px}
+
+.marginRight{margin-right: 10px;}
+
+#header_wrapper{z-index: 100;position: relative; top: 20px;height: 140px; width: 100%; background: url(images/bg_header.png)}
+
+#header{position: relative;}
+
+#header_right{position: absolute; left: 315px;}
+
+/*#dropmenu{top: 0px; left: 28px; position: absolute; padding: 80px 0 20px 0}*/
+
+#dropmenu{display: none;padding: 110px 0 0 0 !important; background: url(images/bg_menu_drop.png); width: 220px; left:8px !important; top: 100px !important; z-index: 19 !important}
+
+#dropmenu li.dropmenu_border{border-bottom: 1px solid #CCC; margin-right: 35px; margin-left: 35px;}
+
+#dropmenu li{margin-bottom: 15px; text-align: center;}
+
+#dropmenu a{display:inline !important;color: #FFF; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;padding:5px;}
+
+#dropmenu a:hover, #dropmenu ul a.current{background: #2b432d;}
+
+#dropmenu_bottom{width: 215px; height: 44px; background: url(images/end_menu_drop.png); margin-left: 13px; position: absolute; display: none}
+
+#logo_wrapper{margin-top:-20px; margin-left: 20px;}
+
+#logo{display: block; cursor: pointer; position: absolute; z-index: 20}
+
+#title{display: none; color: #FFF; font-size: 45px; padding-top: 20px;font-family: 'Myriad Pro Cond'; letter-spacing: 5px}
+
+#title span{border-bottom: 1px solid #CCC;}
+
+#social_network{padding-top: 30px;}
+
+.social_network{text-indent: -9999px; background: url(images/social.png); height: 30px;}
+
+#top_menu{text-align: right; padding-top: 25px;}
+
+#top_menu li{margin-left: 15px;}
+
+#top_menu a{padding-bottom: 5px;}
+
+#top_menu a:hover{border-bottom: 1px solid #CCC;}
+
+#footer_menu{text-align: left;}
+
+#footer_menu li{margin-right: 15px;}
+
+.menu li{display: inline-block; zoom:1; *display: inline;}
+
+.menu a{color: #FFF; display: block;}
+
+#fb{background-position: 0 0;}
+
+#tw{background-position: -30px 0;}
+
+#rss{background-position: -60px 0;}
+
+#main{margin-top:-36px;}
+
+#main_content{margin-top:-38px; background: #d2d0c3; padding-bottom: 20px;}
+
+#main_content p{line-height: 12pt; text-align: justify;}
+
+.big_title{margin-bottom: 20px;font-size: 28px; color: #333; padding-bottom: 5px; font-family: 'Myriad Pro';}
+
+.big_title span{border-bottom: 1px solid #333;}
+
+.second_title{font-size: 18px; color: #333; font-family: 'Myriad Pro';}
+
+#columns{padding-top: 20px;}
+
+#columns label{float: left; display: block; width: 120px;}
+
+#columns .input_text{float: left; height: 17px; padding: 5px; border :1px solid #CCC; width: 300px;}
+
+#columns .input_area{float: left; height: 150px; padding: 5px; border :1px solid #CCC; width: 300px;}
+
+#columns button{background: url(images/viewmore.png); width: 70px; height: 18px; border:0; color: #FFF; cursor: pointer;}
+
+#columns iframe{border: 2px solid #FFF; width: 586px; margin: 10px 0 30px 0}
+
+.list_link{margin-bottom: 20px;}
+
+.list_link h2{margin-bottom: 10px; }
+
+.list_link h2 a{color: #4a361d;}
+
+.link_des p{height: 70px; line-height: 70px !important; font-weight: bold; font-style: italic; font-size: 14px;}
+
+#vertical_menu{padding: 20px 0;}
+
+#vertical_menu li{margin-bottom: 15px;}
+
+#vertical_menu a{border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;padding:5px;}
+
+#vertical_menu a:hover,#vertical_menu a.current{background: #b9b298;}
+
+.paging{float: right; padding: 20px 0;}
+
+.paging #paging_text{float: left; display: block; margin-right: 10px;color: #986633;}
+
+.paging ul{float: left;}
+
+.paging li{margin-left: 10px; float: left;}
+
+.paging .current{font-weight: bold; font-size: 14px;}
+
+.paging .page-numbers{color: #986633;}
+
+#columns p{color: #333;}
+
+#columns .des{padding: 10px 0;}
+
+#right_column p{color: #333;}
+
+#right_column h2{border-bottom: 1px solid #333; padding-bottom: 5px;}
+
+#testimonials p{font-style: italic; color: #444;}
+
+#testimonials .customer{font-style: normal;}
+
+#testimonials .name{font-weight: bold; color: #333;}
+
+.main_cate .cate_img{width: 222px; height: 215px; background: url(images/bg_image_home.png); padding: 19px 0 0 10px; margin-top: -10px;}
+
+.main_cate a{display: block;}
+
+.main_cate p{color: #CCC; text-align: justify;}
+
+.main_cate h2.title{font-size: 15px; font-family: 'Myriad Pro';border-bottom: 1px solid #CCC; padding-bottom: 5px; color: #FFF; margin-bottom: 10px;}
+
+.readmore{font-style: normal !important; margin-top: 10px;background: url(images/viewmore.png); width: 70px; height: 18px; line-height: 18px; color: #FFF !important; text-align: center; font-size: 9pt; float: right;}
+
+.readmore:hover{background-position: 0 -18px;}
+
+#footer_line{margin-top: 20px; height: 36px; background: url(images/bg_footer.png)}
+
+#footer{padding-bottom: 50px;}
+
+#designBy{color: #FFF;}
+
+#designBy a{color: #FFF;}

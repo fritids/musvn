@@ -1,0 +1,3 @@
+[submodule "wp-content/themes/musvn"]
+	path = wp-content/themes/musvn
+	url = git@github.com:vutung2311/musvn.git
