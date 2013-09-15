@@ -1,0 +1,17 @@
+/*
+ * WordPress Plugin: WP-Print
+ * Copyright (c) 2012 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ */
+
+Body {
+    font-family: Tahoma, Arial, Sans-Serif;
+}
+
+pre {
+    direction: ltr;
+}
