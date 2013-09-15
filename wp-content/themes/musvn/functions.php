@@ -669,7 +669,7 @@ function wpmusvn_list_comments($comments, $depth, $parent) {
             <div id="div-comment-<?php echo $comment->comment_ID ?>" class="list_comment">
                 <div class="comment_info">
                     <div class="comment_author">
-                        <span>Người gửi: <b><?php echo get_comment_author_link($comment->comment_ID) ?></b></span>
+                        <span>Người gửi: <b><a class="authorUrl" href="<?php echo get_comment_author_url($comment->comment_ID) ?>"><?php echo get_comment_author($comment->comment_ID) ?></a></b></span>
                     </div>
                     <div class="comment_date">
                         <span>Ngày gửi: <b><?php echo get_comment_date('G:i - d/m/Y', $comment->comment_ID) ?></b></span>

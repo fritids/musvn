@@ -296,6 +296,8 @@ a:link{color: #000;}
 
 .comment_info span,.comment_info a{display: block; height: 22px; line-height: 22px;}
 
+.comment_info a.authorUrl {display: inline !important;}
+
 .comment_author{width: 30%;float: left;}
 
 .comment_author span{float: left;}
