@@ -57,7 +57,7 @@ a:link{color: #000;}
 
 #top_menu a{color: #ccc; display: block; line-height: 32px; height: 32px;}
 
-#header{height: 170px; background: #990000; padding-top: 30px;}
+#header{height: 170px; background: #990000; padding-top: 30px; visibility: hidden;}
 
 #manchester{color: #000; margin-right: 10px;}
 
@@ -69,7 +69,7 @@ a:link{color: #000;}
 
 #manchester_united span{padding-top: 30px;display: block; float: left;}
 
-#nav{position: relative; z-index: 200;}
+#nav{position: relative; z-index: 200; visibility: hidden}
 
 #main_menu ul ul{background: url(images/sub_menu_bg.jpg); top: 38px !important;}
 
@@ -88,10 +88,12 @@ a:link{color: #000;}
 #main_menu a:hover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 
 #main_menu a.hover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
+#main_menu a.toplevelHover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 
 #main_menu ul ul a{min-width: 180px; height: 35px; line-height: 35px; border-bottom: 1px solid #666;}
 
 #main_menu ul ul a.hover{color:#000; background: url(images/sub_menu_bg_hover.png)}
+#main_menu ul ul a.sublevelHover{color:#000; background: url(images/sub_menu_bg_hover.png)}
 
 #main_menu .two_cols_sub{min-width: 466px;}
 
@@ -218,6 +220,8 @@ a:link{color: #000;}
 
 .main_category_article .older_article a{font-weight: bold; color: #990000;}
 
+#tabNews{width: 206px; position: relative;}
+
 #tab_match li{float: left;}
 
 #tab_match a{text-align: center; display: block; height: 26px; width:121px; line-height: 26px; background: #ccc; color: #000}
@@ -232,7 +236,7 @@ a:link{color: #000;}
 
 #tab1 a.selected{width: 104px; background: url(images/tab_active.jpg); color: #fff;}
 
-.tab1{padding: 10px 20px;background: #000; width: 166px; height: 252px; overflow: auto;}
+.tab1{background: #000; width: 206px !important; height: 272px; overflow: auto;}
 
 .tab1 li{margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #414141;}
 
