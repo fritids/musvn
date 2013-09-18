@@ -29,7 +29,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 fontFamily: 'UTM Bebas'
             });
 
-            jQuery(window).load(function() {
+            jQuery(document).ready(function() {
                 
                 <?php if(!is_home()): ?>
                 // Not home - BEGIN
@@ -105,28 +105,6 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 jQuery('#nav  ul  li').first().addClass('first');
                 jQuery('#nav  ul  li').last().addClass('last_child');
 
-                // make selected menu
-                var currentUrl = window.location.href
-                var currentMenu = jQuery( '#nav a[href="'+currentUrl+'"]' );
-                if( currentMenu.length > 0 ) {
-                    var currentMenuClass = currentMenu.attr('class');
-
-                    if( currentMenuClass.indexOf('sublevel') != -1 ) {
-                        currentMenu.addClass('sublevelHover');
-                        currentMenu.parent().parent().prev().addClass('toplevelHover');
-                    } else if( currentMenuClass.indexOf('toplevel') != -1 ) {
-                        currentMenu.addClass('toplevelHover');
-                    }
-                }
-                
-                // Custom scrollbar
-                jQuery('.tab1').jScrollPane({
-                    showArrows: true
-                });
-                // load jquery.idTabs.min.js after custom scrollbar is generated
-                jQuery.getScript( '<?php echo get_template_directory_uri(); ?>/js/jquery.idTabs.min.js' );
-                // After dom is loaded, show header and nav
-                jQuery('#header,#nav').css('visibility','visible');
             });
         </script>
     </head>

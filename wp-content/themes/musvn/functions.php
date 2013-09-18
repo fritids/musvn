@@ -22,9 +22,7 @@ function wpmusvn_load_javascript_files() {
     if (is_home()) {
         wp_enqueue_script('jquery.mousewheel', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.mousewheel.min.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.kinetic', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.kinetic.js', array('jquery', 'jquery-ui-core'));
-        wp_enqueue_script('jquery.mwheelitent', get_template_directory_uri() . '/js/jquery.mwheelitent.min.js', array('jquery'));
-        wp_enqueue_script('jquery.jscrollpane', get_template_directory_uri() . '/js/jquery.jscrollpane.min.js', array('jquery'));
-        //wp_enqueue_script('jquery.idTabs', get_template_directory_uri() . '/js/jquery.idTabs.min.js', array('jquery'));
+        wp_enqueue_script('jquery.idTabs', get_template_directory_uri() . '/js/jquery.idTabs.min.js', array('jquery'));
 
         wp_enqueue_script('jquery.easing', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'));
 
@@ -42,12 +40,10 @@ function wpmusvn_load_stylesheet_files() {
     wp_register_style('core', get_template_directory_uri() . '/style.css');
     wp_register_style('reset', get_template_directory_uri() . '/css/reset.css');
     wp_register_style('smoothDivScroll', get_template_directory_uri() . '/css/smoothDivScroll.css');
-    wp_register_style('jscrollpane', get_template_directory_uri() . '/css/jquery.jscrollpane.css');
 
     wp_enqueue_style('reset');
     wp_enqueue_style('core');
     wp_enqueue_style('smoothDivScroll');
-    wp_enqueue_style('jscrollpane');
 }
 
 // Let's hook in our function with the javascript files with the wp_enqueue_scripts hook
