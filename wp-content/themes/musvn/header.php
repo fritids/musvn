@@ -121,7 +121,8 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 
                 // Custom scrollbar
                 jQuery('.tab1').jScrollPane({
-                    showArrows: true
+                    showArrows: true,
+                    mouseWheelSpeed: 50
                 });
                 // load jquery.idTabs.min.js after custom scrollbar is generated
                 jQuery.getScript( '<?php echo get_template_directory_uri(); ?>/js/jquery.idTabs.min.js' );
