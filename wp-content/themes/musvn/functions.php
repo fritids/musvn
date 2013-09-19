@@ -17,13 +17,13 @@ function wpmusvn_load_javascript_files() {
     wp_enqueue_script('jquery.smoothdivscroll', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.smoothdivscroll-1.3-min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget'));
     wp_enqueue_script('cycle', get_template_directory_uri() . '/js/cycle.js');
     wp_enqueue_script('jquery.dropdown', get_template_directory_uri() . '/js/jquery.dropdown.js', array('jquery'));
+    wp_enqueue_script('jquery.jscrollpane', get_template_directory_uri() . '/js/jquery.jscrollpane.min.js', array('jquery'));
 
     // Adds JavaScript to home pages only
     if (is_home()) {
         wp_enqueue_script('jquery.mousewheel', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.mousewheel.min.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.kinetic', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.kinetic.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.mwheelitent', get_template_directory_uri() . '/js/jquery.mwheelitent.min.js', array('jquery'));
-        wp_enqueue_script('jquery.jscrollpane', get_template_directory_uri() . '/js/jquery.jscrollpane.min.js', array('jquery'));
         //wp_enqueue_script('jquery.idTabs', get_template_directory_uri() . '/js/jquery.idTabs.min.js', array('jquery'));
 
         wp_enqueue_script('jquery.easing', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'));
