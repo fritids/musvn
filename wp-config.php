@@ -83,6 +83,9 @@ define('WP_DEBUG', false);
 /* Disable revision */
 define('WP_POST_REVISIONS', false);
 
+/* Increasing memory limit for Wordpress */
+define('WP_MEMORY_LIMIT', '96M');
+
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
