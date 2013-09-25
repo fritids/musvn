@@ -90,6 +90,8 @@ a:link{color: #000;}
 #main_menu a.hover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 #main_menu a.toplevelHover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 
+#main_menu .first a.toplevelHover{color: #000!important; background: url(images/home_btn.png)}
+
 #main_menu ul ul a{min-width: 180px; height: 35px; line-height: 35px; border-bottom: 1px solid #666;}
 
 #main_menu ul ul a.hover{color:#000; background: url(images/sub_menu_bg_hover.png)}
