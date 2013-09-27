@@ -24,9 +24,7 @@ function wpmusvn_load_javascript_files() {
         wp_enqueue_script('jquery.mousewheel', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.mousewheel.min.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.kinetic', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.kinetic.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.mwheelitent', get_template_directory_uri() . '/js/jquery.mwheelitent.min.js', array('jquery'));
-
         wp_enqueue_script('jquery.easing', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'));
-
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-widget');
     }
@@ -177,7 +175,7 @@ function wpmusvn_register_settings() {
         'type' => 'text',
         'id' => 'small_posts_per_category',
         'name' => 'small_posts_per_category',
-        'desc' => 'The number of small posts per area category',
+        'desc' => 'The number of small posts in category page',
         'label_for' => 'small_posts_per_category',
         'class' => ''
     );

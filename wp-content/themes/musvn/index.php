@@ -26,7 +26,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
     <div id="slide">
         <div id="slide_wrapper" class="float_left">
             <div id="slide_container">
-                <?php $query = new WP_Query('post_type=post&post_status=publish&posts_per_page=' . ($wpmusvn_options['posts_in_big_image_category'] ? $wpmusvn_options['posts_in_big_image_category'] : 5) . '&paged=1&cat=' . $wpmusvn_options['big_image_category']) ?>
+                <?php $query->query('post_type=post&post_status=publish&posts_per_page=' . ($wpmusvn_options['posts_in_big_image_category'] ? $wpmusvn_options['posts_in_big_image_category'] : 5) . '&paged=1&cat=' . $wpmusvn_options['big_image_category']) ?>
                 <?php while ($query->have_posts()) : $query->the_post() ?>
                     <div class="slide_content">
                         <img src="<?php echo @reset(wp_get_attachment_image_src(get_post_thumbnail_id(), 'full')) ?>" width="472" height="300" />
@@ -49,7 +49,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
             <div class="clear"></div>
             <div id="tab_newest_news" class="tab1">
                 <ul class="red_list">
-                    <?php $query = new WP_Query('post_type=post&post_status=publish&orderby=date&order=DESC&posts_per_page=' . ($wpmusvn_options['top_x_newest_post'] ? $wpmusvn_options['top_x_newest_post'] : 10) . '&paged=1') ?>
+                    <?php $query->query('post_type=post&post_status=publish&orderby=date&order=DESC&posts_per_page=' . ($wpmusvn_options['top_x_newest_post'] ? $wpmusvn_options['top_x_newest_post'] : 10) . '&paged=1') ?>
                     <?php while ($query->have_posts()) : $query->the_post() ?>
                         <li><a href="<?php the_permalink() ?>"><?php the_title() ?></a></li>
                     <?php endwhile; ?>
@@ -58,7 +58,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
             </div> 
             <div id="tab_most_view_news" class="tab1">
                 <ul class="red_list">
-                    <?php $query = new WP_Query('post_type=post&post_status=publish&meta_key=post_views_count&orderby=meta_value_num&order=DESC&posts_per_page=' . ($wpmusvn_options['top_x_most_read_post'] ? $wpmusvn_options['top_x_most_read_post'] : 10) . '&paged=1') ?>
+                    <?php $query->query('post_type=post&post_status=publish&meta_key=post_views_count&orderby=meta_value_num&order=DESC&posts_per_page=' . ($wpmusvn_options['top_x_most_read_post'] ? $wpmusvn_options['top_x_most_read_post'] : 10) . '&paged=1') ?>
                     <?php while ($query->have_posts()) : $query->the_post() ?>
                         <li><a href="<?php the_permalink() ?>"><?php the_title() ?></a></li>
                     <?php endwhile; ?>
@@ -80,7 +80,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
             </div>
         </div>
         <div id="hot_news_slide">
-            <?php $query = new WP_Query('post_type=post&post_status=publish&orderby=date&order=DESC&posts_per_page=' . ($wpmusvn_options['posts_in_feature_category'] ? $wpmusvn_options['posts_in_feature_category'] : 10) . '&paged=1&cat=' . $wpmusvn_options['feature_category']) ?>
+            <?php $query->query('post_type=post&post_status=publish&orderby=date&order=DESC&posts_per_page=' . ($wpmusvn_options['posts_in_feature_category'] ? $wpmusvn_options['posts_in_feature_category'] : 10) . '&paged=1&cat=' . $wpmusvn_options['feature_category']) ?>
             <?php while ($query->have_posts()) : $query->the_post() ?>
                 <?php if ($query->current_post % 5 == 0): ?>
                     <div class="description">
@@ -103,7 +103,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
     <div class="main_category_article">
         <?php foreach ($wpmusvn_options['area_one_categories'] as $cat_id): ?>
             <?php $i++ ?>
-            <?php $query = new WP_Query('cat=' . $cat_id . '&posts_per_page=' . (($wpmusvn_options['small_posts_per_category_at_home_page'] ? $wpmusvn_options['small_posts_per_category_at_home_page'] : 3) + 1) . '&paged=1') ?>        
+            <?php $query->query('post_type=post&post_status=publish&cat=' . $cat_id . '&posts_per_page=' . (($wpmusvn_options['small_posts_per_category_at_home_page'] ? $wpmusvn_options['small_posts_per_category_at_home_page'] : 3) + 1) . '&paged=1') ?>        
             <div class="category <?php echo ($i % 2 == 0) ? "right" : "left" ?>">
                 <div class="category_label float_left"></div>
                 <div class="big_title float_left">
@@ -142,7 +142,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
 
         <?php foreach ($wpmusvn_options['area_two_categories'] as $cat_id): ?>
             <?php $j++ ?>
-            <?php $query = new WP_Query('cat=' . $cat_id . '&posts_per_page=' . (($wpmusvn_options['small_posts_per_category_at_home_page'] ? $wpmusvn_options['small_posts_per_category_at_home_page'] : 3) + 1) . '&paged=1') ?>        
+            <?php $query->query('post_type=post&post_status=publish&cat=' . $cat_id . '&posts_per_page=' . (($wpmusvn_options['small_posts_per_category_at_home_page'] ? $wpmusvn_options['small_posts_per_category_at_home_page'] : 3) + 1) . '&paged=1') ?>        
             <div class="category <?php echo ($j % 2 == 0) ? "right" : "left" ?>">
                 <div class="category_label float_left"></div>
                 <div class="big_title float_left">
@@ -192,7 +192,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
         <h3><a href="<?php get_category_link($wpmusvn_options['image_category']) ?>"><?php echo get_category($wpmusvn_options['image_category'])->name ?></a></h3>
     </div>
     <div class="description">
-        <?php $query = new WP_Query('cat=' . $wpmusvn_options['image_category'] . '&posts_per_page=7&paged=1') ?>
+        <?php $query->query('post_type=post&post_status=publish&cat=' . $wpmusvn_options['image_category'] . '&posts_per_page=7&paged=1') ?>
         <?php while ($query->have_posts()) : $query->the_post() ?>
             <div class="list_article">
                 <p><a href="<?php the_permalink() ?>"><img src="<?php echo @reset(wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail')) ?>" width="118" height="87" /></a></p>
