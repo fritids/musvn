@@ -1,5 +1,22 @@
 <?php
 /**
+ * Fix for pagination of MUSVN theme
+ */
+add_action('pre_get_posts', 'wpmusvn_paginate_fix');
+
+function wpmusvn_paginate_fix($query) {
+    $wpmusvn_options = get_option('wpmusvn_theme_options');
+    $posts_per_page = $wpmusvn_options['small_posts_per_category'] ? (int) $wpmusvn_options['small_posts_per_category'] : 6;
+    if (($query->is_category() || $query->is_archive()) && $query->get('posts_per_page') === '')
+        $query->set('posts_per_page', $posts_per_page);
+}
+
+/**
+ * Add support for post thumbnails
+ */
+add_theme_support('post-thumbnails');
+
+/**
  * Include wp-print for printing functionality
  */
 include_once(get_template_directory() . '/inc/wp-print/wp-print.php');
@@ -19,7 +36,7 @@ function wpmusvn_load_javascript_files() {
     wp_enqueue_script('jquery.dropdown', get_template_directory_uri() . '/js/jquery.dropdown.js', array('jquery'));
     wp_enqueue_script('jquery.jscrollpane', get_template_directory_uri() . '/js/jquery.jscrollpane.min.js', array('jquery'));
 
-    // Adds JavaScript to home pages only
+// Adds JavaScript to home pages only
     if (is_home()) {
         wp_enqueue_script('jquery.mousewheel', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.mousewheel.min.js', array('jquery', 'jquery-ui-core'));
         wp_enqueue_script('jquery.kinetic', get_template_directory_uri() . '/js/smooth_div_scroll/jquery.kinetic.js', array('jquery', 'jquery-ui-core'));
@@ -29,8 +46,8 @@ function wpmusvn_load_javascript_files() {
         wp_enqueue_script('jquery-ui-widget');
     }
 
-    // Adds JavaScript to pages with the comment form to support sites with
-    // threaded comments (when in use).
+// Adds JavaScript to pages with the comment form to support sites with
+// threaded comments (when in use).
     if (is_singular() && comments_open() && get_option('thread_comments'))
         wp_enqueue_script('comment-reply');
 }
@@ -151,15 +168,13 @@ add_action('admin_init', 'wpmusvn_register_settings');
  * Function to register the settings
  */
 function wpmusvn_register_settings() {
-    // Register the settings with Validation callback
+// Register the settings with Validation callback
     register_setting('wpmusvn_theme_options', 'wpmusvn_theme_options', 'wpmusvn_validate_settings');
-
-
 
     /* ------------- Add settings section for General --------------------- */
     add_settings_section('wpmusvn_general_section', 'General', 'wpmusvn_display_section', 'wpmusvn_theme_options.php');
 
-    // Menu Items per Columns
+// Menu Items per Columns
     $field_args = array(
         'type' => 'text',
         'id' => 'menu_items_per_column',
@@ -170,7 +185,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('menu_items_per_column', 'Number of menu items per columns', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // Small posts per area category
+// Small posts per area category
     $field_args = array(
         'type' => 'text',
         'id' => 'small_posts_per_category',
@@ -181,7 +196,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('small_posts_per_category', 'Number of small posts per category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // AddThis Profile ID
+// AddThis Profile ID
     $field_args = array(
         'type' => 'text',
         'id' => 'addthis_profile_id',
@@ -192,7 +207,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('addthis_profile_id', 'AddThis Profile ID', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // Related posts to show
+// Related posts to show
     $field_args = array(
         'type' => 'text',
         'id' => 'related_posts_to_show',
@@ -203,7 +218,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('related_posts_to_show', 'Number of  related posts to show on a post', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // Other posts per post
+// Other posts per post
     $field_args = array(
         'type' => 'text',
         'id' => 'other_posts_per_post',
@@ -214,7 +229,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('other_posts_per_post', 'Number of other posts display in a post', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // Footer text one
+// Footer text one
     $field_args = array(
         'type' => 'textarea',
         'id' => 'footer_text_one',
@@ -225,7 +240,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('footer_text_one', 'Footer text One', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_general_section', $field_args);
 
-    // Footer text two
+// Footer text two
     $field_args = array(
         'type' => 'textarea',
         'id' => 'footer_text_two',
@@ -241,7 +256,7 @@ function wpmusvn_register_settings() {
     /* ------------- Add settings section for Home Page --------------------- */
     add_settings_section('wpmusvn_home_page_section', 'Home Page', 'wpmusvn_display_section', 'wpmusvn_theme_options.php');
 
-    // Scroll category field
+// Scroll category field
     $field_args = array(
         'type' => 'dropdown_categories',
         'id' => 'scroll_category',
@@ -252,7 +267,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('scroll_category', 'Scroling Category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Number of post to show in scroll category
+// Number of post to show in scroll category
     $field_args = array(
         'type' => 'text',
         'id' => 'posts_in_scroll_category',
@@ -263,7 +278,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('posts_in_scroll_category', 'Number of posts to show in scroll category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Big Image category field
+// Big Image category field
     $field_args = array(
         'type' => 'dropdown_categories',
         'id' => 'big_image_category',
@@ -274,7 +289,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('big_image_category', 'Big Image Category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Number of post to show in big image category
+// Number of post to show in big image category
     $field_args = array(
         'type' => 'text',
         'id' => 'posts_in_big_image_category',
@@ -285,7 +300,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('posts_in_big_image_category', 'Number of posts to show in big image category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Feature category
+// Feature category
     $field_args = array(
         'type' => 'dropdown_categories',
         'id' => 'feature_category',
@@ -296,7 +311,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('feature_category', 'Feature Category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Number of post to show in feature category
+// Number of post to show in feature category
     $field_args = array(
         'type' => 'text',
         'id' => 'posts_in_feature_category',
@@ -307,7 +322,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('posts_in_feature_category', 'Number of posts to show in feature category', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Number of newest posts to display
+// Number of newest posts to display
     $field_args = array(
         'type' => 'text',
         'id' => 'top_x_newest_post',
@@ -318,7 +333,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('top_x_newest_post', 'Number of newest posts to display', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Number of most read posts to display
+// Number of most read posts to display
     $field_args = array(
         'type' => 'text',
         'id' => 'top_x_most_read_post',
@@ -329,7 +344,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('top_x_most_read_post', 'Number of most read posts to display', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Small posts per area category at the home page
+// Small posts per area category at the home page
     $field_args = array(
         'type' => 'text',
         'id' => 'small_posts_per_category_at_home_page',
@@ -340,7 +355,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('small_posts_per_category_at_home_page', 'Number of small posts per category at home page', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Area One categories
+// Area One categories
     $field_args = array(
         'type' => 'categories_checklist',
         'id' => 'area_one_categories',
@@ -351,7 +366,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('area_one_categories', 'Area One Categories', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Area Two categories
+// Area Two categories
     $field_args = array(
         'type' => 'categories_checklist',
         'id' => 'area_two_categories',
@@ -362,7 +377,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('area_two_categories', 'Area Two Categories', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_home_page_section', $field_args);
 
-    // Image category
+// Image category
     $field_args = array(
         'type' => 'dropdown_categories',
         'id' => 'image_category',
@@ -379,7 +394,7 @@ function wpmusvn_register_settings() {
     add_settings_section('wpmusvn_print_page_section', 'Printing Page', 'wpmusvn_display_section', 'wpmusvn_theme_options.php');
 
 
-    // Printing Comments?
+// Printing Comments?
     $field_args = array(
         'type' => 'check',
         'id' => 'print_options_comments',
@@ -391,7 +406,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('print_options_comments', 'Print Comments', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_print_page_section', $field_args);
 
-    // Printing Links?
+// Printing Links?
     $field_args = array(
         'type' => 'check',
         'id' => 'print_options_links',
@@ -404,7 +419,7 @@ function wpmusvn_register_settings() {
     add_settings_field('print_options_links', 'Print Links', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_print_page_section', $field_args);
 
 
-    // Printing Images?
+// Printing Images?
     $field_args = array(
         'type' => 'check',
         'id' => 'print_options_images',
@@ -417,7 +432,7 @@ function wpmusvn_register_settings() {
     add_settings_field('print_options_images', 'Print Images', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_print_page_section', $field_args);
 
 
-    // Printing Videos?
+// Printing Videos?
     $field_args = array(
         'type' => 'check',
         'id' => 'print_options_videos',
@@ -429,7 +444,7 @@ function wpmusvn_register_settings() {
     );
     add_settings_field('print_options_videos', 'Print Videos', 'wpmusvn_display_setting', 'wpmusvn_theme_options.php', 'wpmusvn_print_page_section', $field_args);
 
-    // Disclaimer/Copyright Text?
+// Disclaimer/Copyright Text?
     $field_args = array(
         'type' => 'text',
         'id' => 'print_options_disclaimer_copyright',

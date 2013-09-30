@@ -1,16 +1,4 @@
 <?php
-/**
- * The template for displaying Archive pages.
- *
- * Used to display archive-type pages if nothing more specific matches a query.
- * For example, puts together date-based pages if no date.php file exists.
- *
- * Learn more: http://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Ten
- * @since Twenty Ten 1.0
- */
 get_header();
 $wpmusvn_options = get_option('wpmusvn_theme_options');
 ?>
@@ -27,8 +15,9 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 <?php $query = new WP_Query('post_type=post&post_status=publish&cat=' . get_query_var('cat') . '&posts_per_page=1&paged=1') ?>
                 <?php $post_ids = array(); ?>
                 <?php while ($query->have_posts()) : $query->the_post() ?>
+                    <?php $post_ids[] = get_the_ID(); ?>
                     <div class="big_news">
-                        <a href="" class="big_news_img float_left"><img src="<?php echo @reset(wp_get_attachment_image_src(get_post_thumbnail_id(), 'full')) ?>" width="260" height="170" /></a>
+                        <a href="<?php the_permalink() ?>" class="big_news_img float_left"><img src="<?php echo @reset(wp_get_attachment_image_src(get_post_thumbnail_id(), 'full')) ?>" width="260" height="170" /></a>
                         <div class="big_news_desc">
                             <p><a href="<?php the_permalink() ?>" class="big_news_title"><?php the_title() ?></a></p>
                             <p class="big_news_date">Ngày cập nhật: <?php the_time('d/m/Y') ?></p>
@@ -40,8 +29,8 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 <?php wp_reset_postdata(); ?>
 
                 <?php $paged = get_query_var('paged') ? (int) get_query_var('paged') : 1 ?>
-                <?php $posts_per_page = $wpmusvn_options['small_posts_per_category'] ? $wpmusvn_options['small_posts_per_category'] : 6 ?>
-                <?php $query->query('post_type=post&post_status=publish&cat=' . get_query_var('cat') . '&posts_per_page=' . $posts_per_page . '&paged=' . $paged) ?>
+                <?php $posts_per_page = $wpmusvn_options['small_posts_per_category'] ? (int) $wpmusvn_options['small_posts_per_category'] : 6 ?>
+                <?php $query->query(array('posts_per_page' => $posts_per_page, 'post__not_in' => $post_ids, 'post_type' => 'post', 'post_status' => 'publish', 'cat' => get_query_var('cat'), 'paged' => $paged)) ?>
                 <?php while ($query->have_posts()) : $query->the_post() ?>
                     <div class="normal_news">
                         <a href="" class="normal_news_img float_left"><img src="<?php echo @reset(wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail')) ?>" width="120" height="90" /></a>
@@ -59,25 +48,39 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
 
                 <script type="text/javascript">
                     jQuery(document).ready(function() {
-                        jQuery("#goto").change(function() {
+                        jQuery("#goToPage").change(function() {
                             if (jQuery(this).val() !== '') {
                                 window.location.href = jQuery(this).val();
                             }
                         });
+                        <?php if ($paged > 1): ?>
+                            jQuery("#goPrevious").click(function() {
+                                window.location.href = '<?php echo add_query_arg('paged', $paged - 1) ?>';
+                            });
+                        <?php endif; ?>
+                        <?php if ($paged < $query->max_num_pages): ?>
+                            jQuery("#goNext").click(function() {
+                                window.location.href = '<?php echo add_query_arg('paged', $paged + 1) ?>';
+                            });
+                        <?php endif; ?>
                     });
                 </script>
                 <div class="news_paging">
                     <a href="<?php echo get_category_feed_link(get_query_var('cat')) ?>" class="float_left rss"><img src="<?php echo get_template_directory_uri() ?>/images/rss.jpg" width="20" height="20" /></a>
                     <div class="paging float_right">
-                        <form>
-                            <span class="float_left">Trang</span>
-                            <select id="goto" class="float_left">
-                                <?php for ($i = 1; $i <= $query->max_num_pages; $i++):
-                                    ?>
-                                    <option value="<?php echo add_query_arg('paged', $i) ?>" <?php echo ($i == $paged) ? 'selected=selected' : '' ?>><?php echo $i ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </form>
+                        <span class="float_left">Trang</span>
+                        <select id="goToPage" class="float_left">
+                            <?php for ($i = 1; $i <= $query->max_num_pages; $i++):
+                                ?>
+                                <option value="<?php echo add_query_arg('paged', $i) ?>" <?php echo ($i == $paged) ? 'selected = selected' : '' ?>><?php echo $i ?></option>
+                            <?php endfor; ?>
+                        </select>
+                        <?php if ($paged > 1): ?>
+                            <button id="goPrevious" class="float_left">Trang trước</button>
+                        <?php endif; ?>
+                        <?php if ($paged < $query->max_num_pages): ?>
+                            <button id="goNext" class="float_right">Trang sau</button>
+                        <?php endif; ?>
                     </div>
                     <div class="clear"></div>
                 </div>

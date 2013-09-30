@@ -47,7 +47,11 @@ function recursive_insert($categories, $parent_id) {
                 If ($post_id != 0) {
                     add_post_meta($post_id, 'post_views_count', $article['Solandoc'], true) || update_post_meta($post_id, 'post_views_count', $article['Solandoc']);
                     wp_set_post_terms($post_id, array($category_id), 'category');
-                    $thumbnail_tag = media_sideload_image('http://manutd.com.vn/Portals/0/news/' . $article['ImagePath'], $post_id);
+					if(isset($article['ImagePathHOT'])){
+						$thumbnail_tag = media_sideload_image('http://manutd.com.vn/Portals/0/news/hot/' . $article['ImagePathHOT'], $post_id);
+					} else {
+						$thumbnail_tag = media_sideload_image('http://manutd.com.vn/Portals/0/news/' . $article['ImagePath'], $post_id);
+					}
                     If (!is_wp_error($thumbnail_tag)) {
                         $attachment_src = get_image_src_from_img_tag($thumbnail_tag);
                         If (set_post_thumbnail($post_id, get_attachment_id_from_src($attachment_src))) {
@@ -55,9 +59,13 @@ function recursive_insert($categories, $parent_id) {
                         }
                     }
                     echo 'Inserted post ' . $post_id . PHP_EOL;
-                }
+                } else {
+					echo 'Failed to insert post ' . $article['Title'] . PHP_EOL;
+				}
             }
-        }
+        } else {
+			echo 'Failed to insert category ' . $parent['CategoryName'] . PHP_EOL;
+		}
         If (is_array($parent['Children']))
             recursive_insert($parent['Children'], $category_id);
     }
@@ -95,7 +103,7 @@ while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
 }
 sqlsrv_free_stmt($stmt);
 
-$sql = "SELECT ALL CategoryId, Title, ImagePath, Summary, Content, Solandoc, Createdate FROM NV_News";
+$sql = "SELECT ALL CategoryId, Title, ImagePath, ImagePathHOT, Summary, Content, Solandoc, Createdate FROM NV_News";
 $stmt = sqlsrv_query($conn, $sql);
 if ($stmt === false) {
     echo 'Error in query preparation/execution.' . PHP_EOL;

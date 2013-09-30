@@ -1,10 +1,4 @@
 <?php
-/**
- * The Header for our theme.
- *
- * Displays all of the <head> section and everything up till <div class="container">
- *
- */
 $wpmusvn_options = get_option('wpmusvn_theme_options');
 ?>
 <!DOCTYPE html>
@@ -29,7 +23,7 @@ $wpmusvn_options = get_option('wpmusvn_theme_options');
                 fontFamily: 'UTM Bebas'
             });
 
-            jQuery(window).load(function() {
+            jQuery(document).ready(function() {
                 
                 <?php if(!is_home()): ?>
                 // Not home - BEGIN
