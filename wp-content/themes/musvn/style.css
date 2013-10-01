@@ -80,17 +80,14 @@ a:link{color: #000;}
 #main_menu .first{margin: 0 !important}
 
 #main_menu .first a{padding: 0 !important;text-indent: -9999px; width: 81px; height: 37px; background: url(images/home_btn_normal.png)}
-
-#main_menu .first a:hover{width: 81px; height: 37px; background: url(images/home_btn.png)}
+#main_menu .first a:hover{width: 81px; text-indent: -9999px; height: 37px; background: url(images/home_btn.png)}
+#main_menu .first a.toplevelHover{color: #000!important; background: url(images/home_btn.png)}
 
 #main_menu a{color: #fff; display: block; height: 37px; line-height: 37px; font-size: 18px; padding: 0 26px;}
-
 #main_menu a:hover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 
 #main_menu a.hover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
 #main_menu a.toplevelHover{color: #000!important; background: url(images/main_menu_bg_hover.png)}
-
-#main_menu .first a.toplevelHover{color: #000!important; background: url(images/home_btn.png)}
 
 #main_menu ul ul a{min-width: 180px; height: 35px; line-height: 35px; border-bottom: 1px solid #666;}
 
