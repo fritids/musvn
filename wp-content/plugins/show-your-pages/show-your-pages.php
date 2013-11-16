@@ -18,6 +18,17 @@ add_action('admin_init', array('Show_Your_Pages_Core', 'register_syp_settings'))
 add_post_type_support('page', 'excerpt');
 /* add action for showing pages */
 add_action('syp_show_pages', array('Show_Your_Pages_Core', 'syp_show_pages_with_excerpt'));
+add_action('syp_show_childen_pages', array('Show_Your_Pages_Core', 'syp_show_children_pages_with_excerpt'));
+
+/* helper function */
+
+function get_page_by_slug($page_slug, $output = OBJECT, $post_type = 'page') {
+    global $wpdb;
+    $page = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type= %s AND post_status = 'publish'", $page_slug, $post_type));
+    if ($page)
+        return get_post($page, $output);
+    return null;
+}
 
 /*
  * Show Your Pages - Core
@@ -38,6 +49,7 @@ class Show_Your_Pages_Core {
     function register_syp_settings() {
         /* register our settings */
         register_setting('syp-settings-group', 'syp-page-list');
+        register_setting('syp-settings-group', 'syp-show-childpage');
     }
 
     function syp_settings_page() {
@@ -52,33 +64,76 @@ class Show_Your_Pages_Core {
                 <?php settings_fields('syp-settings-group'); ?>
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e('Please choose which page you want to show in Show Your Pages', 'show-your-pages'); ?></th>
+                        <th><?php _e('Please choose which page you want to show in Show Your Pages', 'show-your-pages'); ?></th>
                         <td>
-                            <div style="overflow:auto; height: 150px; width:300px; padding:.5em .9em; border-style:solid; border-width: 1px; border-color: #DFDFDF; background-color:white; display: block; line-height: 1.4em; color:#333">
-                                <ul>
+                            <div class="posttypediv" style="overflow:auto; height: 150px; width:300px; padding:.5em .9em; border-style:solid; border-width: 1px; border-color: #DFDFDF; background-color:white; display: block; line-height: 1.4em; color:#333">
+                                <ul id="syp-pages-selector" class="categorychecklist">
                                     <?php
                                     $syp_walker_page_checklist = new Syp_Walker_Page_Checklist();
-                                    wp_list_pages(array('walker' => $syp_walker_page_checklist, 'title_li' => null));
+                                    wp_list_pages(array('walker' => $syp_walker_page_checklist, 'title_li' => null, 'sort_column' => 'post_modified', 'sort_order' => 'DESC'));
                                     ?>
                                 </ul>
                             </div>
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <td colspan="2">
+                            <label for="syp-show-childpage"><input type="checkbox" id="syp-show-childpage" name="syp-show-childpage" <?php if (get_option('syp-show-childpage') == 1) echo 'checked=checked' ?> value="1"/>&nbsp;<?php _e('Show all sub pages of checked page', 'show-your-pages') ?></label>
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    if (jQuery('input#syp-show-childpage').prop('checked')) {
+                        jQuery('ul#syp-pages-selector ul li input').prop('disabled', true);
+                    }
+                });
+
+                jQuery('input#syp-show-childpage').change(function() {
+                    if (jQuery(this).prop('checked')) {
+                        jQuery('ul#syp-pages-selector ul li input').prop('disabled', true);
+                    } else {
+                        jQuery('ul#syp-pages-selector ul li input').prop('disabled', false);
+                    }
+                });
+            </script>
         </div>
         <?php
     }
 
-    function syp_show_pages_with_excerpt() {
-        $syp_page_list = get_option('syp-page-list');
-        foreach ($syp_page_list as $page_id) {
-            setup_postdata(get_page($page_id));
-            echo '<h2>' . get_page($page_id)->post_title . '</h2>';
-            echo '<p>' . get_the_excerpt() . '</p>';
+    function syp_show_children_pages_with_excerpt($slug) {
+        $children_pages = get_pages(array('parent' => get_page_by_slug($slug)->ID, 'hierarchical' => 0));
+        echo '<ul>';
+        foreach ($children_pages as $child_page) {
+            echo '<li><a href="' . get_page_link($child_page->ID) . '">' . $child_page->post_title . '</a></li>';
+            echo '<p>' . $child_page->post_excerpt . '<a href="' . get_permalink($child_page->ID) . '">もっと読む</a></p>';
         }
-        wp_reset_postdata();
+        echo '</ul>';
+    }
+
+    function syp_show_pages_with_excerpt() {
+        echo '<ul>';
+        $syp_page_list = get_option('syp-page-list');
+        $pages = get_pages(array('sort_column' => 'post_modified', 'sort_order' => 'DESC'));
+        $showed_page = 0;
+        foreach ($pages as $page) {
+            if ($showed_page > 4)
+                return;
+            foreach ($syp_page_list as $syp_page_id) {
+                if (@in_array($page->ID, $syp_page_list) ||
+                        (get_option('syp-show-childpage') == 1 && @in_array($syp_page_id, get_ancestors($page->ID, 'page')))) {
+                    ?>
+                    <li><a href="<?php echo get_page_link($page->ID) ?>"><?php echo get_page($page->ID)->post_title ?></a></li>
+                    <p><?php get_page($page->ID)->post_excerpt ?><a href="<?php echo get_permalink($page->ID) ?>">もっと読む</a></p>
+                    <?php
+                    $showed_page++;
+                    break;
+                }
+            }
+        }
+        echo '</ul>';
     }
 
 }
@@ -120,7 +175,7 @@ class Show_Your_Pages extends WP_Widget {
     public function widget($args, $instance) {
         extract($args);
 
-        $title = '<a href=' . get_permalink($instance['page_id']) . '>' . apply_filters('widget_title', get_page($instance['page_id'])->post_title) . '</a>';
+        $title = apply_filters('widget_title', get_page($instance['page_id'])->post_title);
 
         echo $before_widget;
         if (!empty($title))
@@ -135,14 +190,11 @@ class Syp_Walker_Page_Checklist extends Walker_Page {
 
     function start_el(&$output, $page, $depth, $args, $current_page) {
         if ($depth)
-            $indent = str_repeat("&nbsp", $depth);
+            $indent = str_repeat("\t", $depth);
         else
             $indent = '';
-
         extract($args, EXTR_SKIP);
-        ?>
-        <label for="syp_page_list-<?php echo $page->ID ?>"><input type="checkbox" id="syp_page_list-<?php echo $page->ID ?>" value="<?php echo $page->ID ?>" <?php if (@in_array($page->ID, get_option('syp-page-list'))) echo 'checked=checked' ?> name="syp-page-list[]"/>&nbsp;<?php echo $page->post_title; ?></label>
-        <?php
+        $output .= $indent . '<li><label for="syp_page_list-' . $page->ID . '"><input type="checkbox" id="syp_page_list-' . $page->ID . '" value="' . $page->ID . '" ' . (@in_array($page->ID, get_option('syp-page-list')) ? 'checked=checked' : "") . ' name="syp-page-list[]"/>&nbsp;' . $page->post_title . '</label></li>';
     }
 
 }
